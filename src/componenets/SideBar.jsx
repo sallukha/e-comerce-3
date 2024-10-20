@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useFilter } from './context/FilterContext';
+import { Link } from 'react-router-dom';
 
 const SideBar = () => {
     const {
@@ -18,6 +19,7 @@ const SideBar = () => {
 
     const [categories, setCategories] = useState([]);
     const keywords = ["apple", "watch", "fashion", "trend", "shoes", "shirt"];
+    const [dropdownOpen, setDropdownOpen] = useState(false); // State for dropdown visibility
 
     useEffect(() => {
         const fetchData = async () => {
@@ -29,7 +31,7 @@ const SideBar = () => {
                 );
                 setCategories(newCategories);
             } catch (error) {
-                console.error("Error fetching data:", error); // Improved error logging
+                console.error("Error fetching data:", error);  
             }
         };
         fetchData();
@@ -50,7 +52,7 @@ const SideBar = () => {
     };
 
     const handleKeyWordClick = (keyword) => {
-        setKeywords(keyword);  // Set the clicked keyword
+        setKeywords(keyword);   
     };
 
     const handleResetFilter = () => {
@@ -61,8 +63,42 @@ const SideBar = () => {
         setKeywords("");
     };
 
+    const toggleDropdown = () => {
+        setDropdownOpen(!dropdownOpen);
+    };
+
     return (
         <div className='py-10'>
+            {/* Login and Signup Dropdown */}
+            <div className="relative mb-4">
+                <button
+                    onClick={toggleDropdown}
+                    className="bg-gray-800 text-white py-2 px-4 rounded"
+                >
+                    Account
+                </button>
+                {dropdownOpen && (
+                    <div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg z-10">
+                        <Link to="/login">
+                            <button
+                                onClick={() => { toggleDropdown(); }} // Close dropdown on click
+                                className="block px-4 py-2 text-left text-gray-800 hover:bg-gray-100 w-full"
+                            >
+                                Login
+                            </button>
+                        </Link>
+                        <Link to="/signup">
+                            <button
+                                onClick={() => { toggleDropdown(); }} // Close dropdown on click
+                                className="block px-4 py-2 text-left text-gray-800 hover:bg-gray-100 w-full"
+                            >
+                                Signup
+                            </button>
+                        </Link>
+                    </div>
+                )}
+            </div>
+
             <div className="mb-4">
                 <input
                     className='border border-black rounded-lg p-2 w-50'
@@ -112,7 +148,7 @@ const SideBar = () => {
                     {keywords.map((keyword, index) => (
                         <button
                             key={index}
-                            onClick={() => handleKeyWordClick(keyword)}  // Pass the correct keyword
+                            onClick={() => handleKeyWordClick(keyword)}  
                             className='block mb-2 px-4 py-2 w-50 text-left border rounded hover:bg-gray-200'
                         >
                             {keyword.toUpperCase()}

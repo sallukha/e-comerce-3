@@ -6,12 +6,12 @@ import { Tally3 } from 'lucide-react';
 const MainContect = () => {
     const { searchQuery, selectedCategory, minPrice, maxPrice, keyWord } = useFilter();
     const [product, setProduct] = useState([]);
-    const [dropdown, setDropdown] = useState(false); // Boolean to toggle dropdown visibility
+    const [dropdown, setDropdown] = useState(false) 
     const [filter, setFilter] = useState('');
-    const [cart, setCart] = useState([]); // Cart state
+    const [cart, setCart] = useState([]);  
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage] = useState(6); // Show 6 products per page
-    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(''); // Payment method
+    const [itemsPerPage] = useState(6); 
+    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');  
 
     useEffect(() => {
         let url = 'https://dummyjson.com/products';
@@ -219,6 +219,7 @@ const MainContect = () => {
                     <option value="">--Select Payment Method--</option>
                     <option value="Credit Card">Credit Card</option>
                     <option value="PayPal">PayPal</option>
+                    <option value="PayPal">PhonePay</option>
                     <option value="Cash on Delivery">Cash on Delivery</option>
                 </select>
                 <button
