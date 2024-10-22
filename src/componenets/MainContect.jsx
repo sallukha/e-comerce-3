@@ -6,12 +6,12 @@ import { Tally3 } from 'lucide-react';
 const MainContect = () => {
     const { searchQuery, selectedCategory, minPrice, maxPrice, keyWord } = useFilter();
     const [product, setProduct] = useState([]);
-    const [dropdown, setDropdown] = useState(false) 
+    const [dropdown, setDropdown] = useState(false);
     const [filter, setFilter] = useState('');
-    const [cart, setCart] = useState([]);  
+    const [cart, setCart] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage] = useState(6); 
-    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');  
+    const [itemsPerPage] = useState(6);
+    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
 
     useEffect(() => {
         let url = 'https://dummyjson.com/products';
@@ -24,15 +24,13 @@ const MainContect = () => {
             .catch((error) => console.error('Error fetching products', error));
     }, [keyWord]);
 
-    // Function to toggle dropdown visibility
     const toggleDropdown = () => {
         setDropdown(!dropdown);
     };
 
-    // Function to handle filtering logic
     const applyFilter = (filterType) => {
         setFilter(filterType);
-        setDropdown(false); // Close the dropdown after selecting a filter
+        setDropdown(false);
         if (filterType === 'cheap') {
             setProduct((prevProducts) =>
                 [...prevProducts].sort((a, b) => a.price - b.price)
@@ -48,7 +46,6 @@ const MainContect = () => {
         }
     };
 
-    // Function to add item to cart
     const addToCart = (product) => {
         const existingItem = cart.find(item => item.id === product.id);
         if (existingItem) {
@@ -60,7 +57,6 @@ const MainContect = () => {
         }
     };
 
-    // Function to remove item from cart
     const removeFromCart = (productId) => {
         const existingItem = cart.find(item => item.id === productId);
         if (existingItem.quantity > 1) {
@@ -68,23 +64,21 @@ const MainContect = () => {
                 item.id === productId ? { ...item, quantity: item.quantity - 1 } : item
             ));
         } else {
-            setCart(cart.filter(item => item.id !== productId)); // Remove item if quantity is 1
+            setCart(cart.filter(item => item.id !== productId));
         }
     };
 
-    // Function to handle payment method selection
     const handlePayment = () => {
         if (!selectedPaymentMethod) {
             alert('Please select a payment method');
             return;
         }
         alert(`Payment successful with ${selectedPaymentMethod}!`);
-        setCart([]); // Clear the cart after payment
+        setCart([]); 
     };
 
-    // Function to filter products based on category, price, search query, and keyword
     const getFilteredProducts = () => {
-        let filteredProducts = [...product]; // Start with all products
+        let filteredProducts = [...product];
 
         if (selectedCategory) {
             filteredProducts = filteredProducts.filter(product => product.category === selectedCategory);
@@ -113,7 +107,6 @@ const MainContect = () => {
         return filteredProducts;
     };
 
-    // Pagination Logic
     const indexOfLastProduct = currentPage * itemsPerPage;
     const indexOfFirstProduct = indexOfLastProduct - itemsPerPage;
     const currentProducts = getFilteredProducts().slice(indexOfFirstProduct, indexOfLastProduct);
@@ -123,39 +116,39 @@ const MainContect = () => {
     const totalPages = Math.ceil(getFilteredProducts().length / itemsPerPage);
 
     return (
-        <div className='relative py-10 mx-5'>
-            {/* Button to toggle dropdown */}
+        <div className="relative py-10 mx-5">
+            {/* Filter dropdown button */}
             <div className="flex justify-end mb-5">
-                <button className='bg-gray-200 p-2 rounded-md' onClick={toggleDropdown}>
+                <button className="bg-gray-200 p-2 rounded-md" onClick={toggleDropdown}>
                     <Tally3 />
                 </button>
             </div>
 
-            {/* Dropdown menu */}
+            {/* Dropdown for sorting/filtering */}
             {dropdown && (
-                <div className='absolute bg-white border shadow-md rounded-md mt-2 z-10'>
-                    <button className='block px-4 py-2 hover:bg-gray-100' onClick={() => applyFilter('cheap')}>
+                <div className="absolute bg-white border shadow-md rounded-md mt-2 z-10">
+                    <button className="block px-4 py-2 hover:bg-gray-100" onClick={() => applyFilter('cheap')}>
                         Cheap
                     </button>
-                    <button className='block px-4 py-2 hover:bg-gray-100' onClick={() => applyFilter('expensive')}>
+                    <button className="block px-4 py-2 hover:bg-gray-100" onClick={() => applyFilter('expensive')}>
                         Expensive
                     </button>
-                    <button className='block px-4 py-2 hover:bg-gray-100' onClick={() => applyFilter('popular')}>
+                    <button className="block px-4 py-2 hover:bg-gray-100" onClick={() => applyFilter('popular')}>
                         Popular
                     </button>
                 </div>
             )}
 
-            {/* Display products */}
-            <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6'>
+            {/* Display products - Responsive grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
                 {currentProducts.map((prod) => (
-                    <div key={prod.id} className='border p-5 rounded-lg shadow-md bg-white'>
-                        <img src={prod.thumbnail} alt={prod.title} className='w-full h-48 object-cover rounded-md' />
-                        <h2 className='mt-2 text-lg font-semibold'>{prod.title}</h2>
-                        <p className='mt-1 text-green-700 font-bold'>${prod.price}</p>
-                        <p className='text-sm text-gray-500'>Rating: {prod.rating}</p>
+                    <div key={prod.id} className="border p-5 rounded-lg shadow-md bg-white">
+                        <img src={prod.thumbnail} alt={prod.title} className="w-full h-48 object-cover rounded-md" />
+                        <h2 className="mt-2 text-lg font-semibold">{prod.title}</h2>
+                        <p className="mt-1 text-green-700 font-bold">${prod.price}</p>
+                        <p className="text-sm text-gray-500">Rating: {prod.rating}</p>
                         <button
-                            className='bg-blue-500 text-white py-1 px-4 rounded-md mt-3'
+                            className="bg-blue-500 text-white py-1 px-4 rounded-md mt-3"
                             onClick={() => addToCart(prod)}
                         >
                             Add to Cart
@@ -170,14 +163,16 @@ const MainContect = () => {
                     <button
                         key={index}
                         onClick={() => paginate(index + 1)}
-                        className={`px-4 py-2 mx-1 border rounded-lg ${currentPage === index + 1 ? 'bg-black text-white' : 'bg-gray-200'}`}
+                        className={`px-4 py-2 mx-1 border rounded-lg ${
+                            currentPage === index + 1 ? 'bg-black text-white' : 'bg-gray-200'
+                        }`}
                     >
                         {index + 1}
                     </button>
                 ))}
             </div>
 
-            {/* Cart Summary - Moved to Bottom */}
+            {/* Cart Summary */}
             <div className="mt-10">
                 <h2 className="text-lg font-bold">Cart ({cart.length} items)</h2>
                 {cart.length > 0 ? (
@@ -208,7 +203,7 @@ const MainContect = () => {
                 )}
             </div>
 
-            {/* Payment Method Section */}
+            {/* Payment Method */}
             <div className="mt-5">
                 <h3 className="text-lg font-bold">Select Payment Method:</h3>
                 <select
@@ -219,14 +214,14 @@ const MainContect = () => {
                     <option value="">--Select Payment Method--</option>
                     <option value="Credit Card">Credit Card</option>
                     <option value="PayPal">PayPal</option>
-                    <option value="PayPal">PhonePay</option>
+                    <option value="PhonePay">PhonePay</option>
                     <option value="Cash on Delivery">Cash on Delivery</option>
                 </select>
                 <button
                     className="bg-green-500 text-white py-2 px-4 rounded-md mt-3 mx-4"
                     onClick={handlePayment}
                 >
-                    Pay Now
+                    Proceed to Payment
                 </button>
             </div>
         </div>
