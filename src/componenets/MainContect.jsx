@@ -74,7 +74,7 @@ const MainContect = () => {
             return;
         }
         alert(`Payment successful with ${selectedPaymentMethod}!`);
-        setCart([]); 
+        setCart([]);
     };
 
     const getFilteredProducts = () => {
@@ -163,9 +163,8 @@ const MainContect = () => {
                     <button
                         key={index}
                         onClick={() => paginate(index + 1)}
-                        className={`px-4 py-2 mx-1 border rounded-lg ${
-                            currentPage === index + 1 ? 'bg-black text-white' : 'bg-gray-200'
-                        }`}
+                        className={`px-4 py-2 mx-1 border rounded-lg ${currentPage === index + 1 ? 'bg-black text-white' : 'bg-gray-200'
+                            }`}
                     >
                         {index + 1}
                     </button>

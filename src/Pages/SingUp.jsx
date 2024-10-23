@@ -19,9 +19,12 @@ const SignUp = ({ setIsAuthenticated }) => {
     };
 
     return (
-        <div className="bg-gray-400 min-h-screen flex flex-col items-center justify-center">
+        <> 
+        
+        <div className="min-h-screen flex flex-col items-center justify-center">
+              <span className='text-4xl font-bold mb-10 text-cyan-700'>ShopFusion</span>
             {/* Account Dropdown */}
-            <div className="absolute top-4 right-4">
+            <div className="absolute top-4 right-4 my-10">
                 <div className="relative">
                     {/* <button className="bg-gray-800 text-white py-2 px-4 rounded">
                         Account
@@ -42,7 +45,7 @@ const SignUp = ({ setIsAuthenticated }) => {
             </div>
 
             {/* Signup Form */}
-            <div className="bg-white p-8 rounded shadow-md w-96">
+            <div className="bg-gradient-to-r from-gray-500 via-zinc-100 to-stone-800 p-8 rounded shadow-md w-96">
                 <h1 className="text-2xl font-bold text-center mb-6">Sign Up</h1>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="mb-4">
@@ -99,6 +102,7 @@ const SignUp = ({ setIsAuthenticated }) => {
                 </div>
             </div>
         </div>
+        </>
     );
 };
 

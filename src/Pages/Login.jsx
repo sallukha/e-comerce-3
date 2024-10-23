@@ -28,7 +28,8 @@ const Login = ({ setIsAuthenticated }) => {
     };
 
     return (
-        <div className="bg-gray-400 min-h-screen flex flex-col items-center justify-center">
+        <div className="   min-h-screen flex flex-col items-center justify-center">
+            <span className='text-4xl font-bold mb-10 text-cyan-700'>ShopFusion</span>
             {/* Account Dropdown */}
             <div className="absolute top-4 right-4">
                 <div className="relative">
@@ -51,7 +52,8 @@ const Login = ({ setIsAuthenticated }) => {
             </div>
 
             {/* Login Form */}
-            <div className="bg-white p-8 rounded shadow-md w-96">
+            <div className="bg-gradient-to-r from-gray-500 via-zinc-100 to-stone-800  p-8 rounded-3xl shadow-md w-96">
+            
                 <h1 className="text-2xl font-bold text-center mb-6">Login</h1>
                 {loginError && (
                     <div className="mb-4 text-red-500 text-center">
@@ -59,6 +61,7 @@ const Login = ({ setIsAuthenticated }) => {
                     </div>
                 )}
                 <form onSubmit={handleSubmit(onSubmit)}>
+            
                     <div className="mb-4">
                         <label className="block text-gray-700">Email</label>
                         <input

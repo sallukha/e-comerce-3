@@ -25,6 +25,8 @@ const SideBar = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [followStatus, setFollowStatus] = useState([false, false, false]); // Manage follow/unfollow state for multiple users
 
+    const [isLoggedIn, setIsLoggedIn] = useState(false); // Manage login state
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -89,6 +91,11 @@ const SideBar = () => {
         return stars;
     };
 
+    const handleLogout = () => {
+        setIsLoggedIn(false); // Set login state to false on logout
+        toggleDropdown(); // Close dropdown after logout
+    };
+
     const users = [
         { name: "John Doe", rating: 4, avatar: "https://via.placeholder.com/50" },
         { name: "Jane Smith", rating: 5, avatar: "https://via.placeholder.com/50" },
@@ -102,32 +109,43 @@ const SideBar = () => {
 
     return (
         <div className="py-6 px-4 lg:px-8">
-            {/* Login and Signup Dropdown */}
+            {/* Login/Logout Dropdown */}
             <div className="relative mb-4">
                 <button
                     onClick={toggleDropdown}
                     className="bg-gray-800 text-white py-2 px-4 rounded w-full md:w-auto"
                 >
-                    <span>Acount</span>
+                    <span>Account</span>
                 </button>
                 {dropdownOpen && (
                     <div className="absolute right-0 mt-2 w-full md:w-48 bg-white border rounded shadow-lg z-10">
-                        <Link to="/login">
+                        {isLoggedIn ? (
                             <button
-                                onClick={() => { toggleDropdown(); }} // Close dropdown on click
+                                onClick={handleLogout}
                                 className="block px-4 py-2 text-left text-gray-800 hover:bg-gray-100 w-full"
                             >
-                                Login
+                                 
                             </button>
-                        </Link>
-                        <Link to="/signup">
-                            <button
-                                onClick={() => { toggleDropdown(); }} // Close dropdown on click
-                                className="block px-4 py-2 text-left text-gray-800 hover:bg-gray-100 w-full"
-                            >
-                                Signup
-                            </button>
-                        </Link>
+                        ) : (
+                            <>
+                                <Link to="/login">
+                                    <button
+                                        onClick={() => { toggleDropdown(); }} // Close dropdown on click
+                                        className="block px-4 py-2 text-left text-gray-800 hover:bg-gray-100 w-full"
+                                    >
+                                       Logout 
+                                    </button>
+                                </Link>
+                                <Link to="/signup">
+                                    <button
+                                        onClick={() => { toggleDropdown(); }} // Close dropdown on click
+                                        className="block px-4 py-2 text-left text-gray-800 hover:bg-gray-100 w-full"
+                                    >
+                                    
+                                    </button>
+                                </Link>
+                            </>
+                        )}
                     </div>
                 )}
             </div>
